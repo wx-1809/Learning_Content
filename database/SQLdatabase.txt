@@ -1,0 +1,129 @@
+Linux系统运维的Mysql面试题
+数据库的安装与启动相关命令：
+1.Linux启动MySQL服务器
+    /etc/init.d/mysqld start
+    service mysqld start
+
+1.1 windows启动MySQL服务器
+    安装压缩包地址：https://www.cnblogs.com/li150dan/p/15175078.html，
+    （1）使用管理员权限打开cmd，并进入mysql/bin目录下;
+    （2）启动服务：使用net start mysql；停止服务：net stop mysql;
+
+2.Linux检测端口是否运行
+    lsof -i :3306 （其中是一个查看进程打开的文件的工具）
+    netstat -lntup | grep 3306 （其中Netstat是控制台命令,是一个监控TCP/IP网络的非常有用的工具）
+
+2.1 Windows端口查看
+    查看所有的端口：netstat -ano
+    查询指定端口占用： netstat -ano| findstr "3306" (其中3306表示要查询的端口号)
+
+3.Linux设置或修改mysql密码
+    设置密码：
+        mysql -u root -ppassword -e "set password for root = password('password')"
+        mysql admin -u root password "NEWPASSWORD"
+    更修密码：
+        MySQL admin -u root password oldpassword ”NEWPASSWORD“
+        use mysql;
+        update user set password = PASSWORD('newpassowrd') where user='root';
+        flush privileges;
+
+3.1 Windows系统安装的mysql的密码
+    可参考如下链接：https://blog.csdn.net/dream_an/article/details/51058710
+    MySQL数据库安装会生成随机的初始密码，登陆数据库后修改密码：
+    修改密码操作如下：
+        alter user root@localhost identified by "123456"; (其中双引号表示新的密码)
+
+
+4.linux/Windows登录数据库操作
+    mysql -u root -ppassword
+
+5.linux查看当前数据库的字符集
+    show create database DB_NAME; (其中DB_NAME表示数据库名称)
+
+6.linux查看当前数据库版本
+    mysql -v
+    MySQL -u root -ppassword -e "use mysql;select version(();"
+
+7.Linux查看当前登录用户
+    mysal -u root -ppassword -e "select user()"
+
+    select user(); #进入数据库
+
+8. Linux创建GBK字符集数据库mingongge并查看完整创建语句 mingongge (注：mingongge是数据库名称)
+    create database mingongge default charset gbk collate gbk_chinese_ci;
+
+9.创建用户mingongge使用之可以管理数据库mingongge
+    grant all on mingongge.* to 'mingongge'@'localhost' identified by 'mingongge';
+
+10.查看创建用户mingongge的权限
+    show grants for mingongge@localhost;
+
+11.查看当前数据库有哪些用户
+    select user from mysql.user;
+
+12.进入mingongge数据库
+    use mingongge;
+
+13.创建一个innodb GBK表test，字段id int(4)和name varchar(16)
+    create table test(
+    id int(4),
+    name varchar(16)
+    )ENGINE=innodb DEFAULT CHARSET=gbk;
+
+14.查看建表结构及表结构的SQL语句
+    查看表详细字段内容：desc test;
+    显示创建表的内容: show create table test/G
+
+15.插入一条数据”1，mingongge“
+    insert into test values('1','mingongge);
+
+16.在批量插入2行数据“2,民工哥”,“3,mingonggeedu”
+    insert into test values('2','民工哥'),('3','mingonggeedu');
+
+17.查询名字为mingongge的记录
+    select * from test where name='mingongge'
+
+18.把数据id等于1的名字mingongge更改为mgg
+    update test set name='mgg' where id='1';
+
+19.在字段name前插入age字段，类型tinyint(2)
+    alter table test add age tinyint(2) after id;
+
+20.不退出数据库，完成备份mingongge数据库
+    system mysqldump -uroot -ppassword -B mingongge >/root/mingongge_bak.sql
+
+    查看数据内容：ll /root/mingongge_bak.sql
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
