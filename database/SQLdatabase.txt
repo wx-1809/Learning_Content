@@ -94,8 +94,86 @@ Linux系统运维的Mysql面试题
 
     查看数据内容：ll /root/mingongge_bak.sql
 
+21.删除test表中的所有数据，并查看
+    delete from test;
+    查看表格内容：select *from test;
+
+22.删除表test和mingongge数据库并查看
+    drop table test;
+    show tables;
+    drop database mingongge;
+    show databases;
+
+23.不退出数据库恢复以上删除的数据
+    system mysql -u root -pMgg123.0 </root/mingongge_bak.sql
+
+24.把库表的GBK字符修改为UTF8
+    alter database mingongge default character set utf8;
+    alter table test default character set utf8;
+
+25.把id列设置为主键，在Name字段上创建普通索引
+     alter table test add primary key(id);
+     create index mggindex on test(name(16));
+
+26.在字段name后插入手机号字段(shouji)，类型char(11)
+    alter table test add shouji char(11);
+    #默认就是在最后一列后面插入新增列
+
+27.所有字段上插入2条记录（自行设定数据）
+    insert into test values('4','23','li','13700000001'),('5','26','zhao','13710000001');
+
+28.在手机字段上对前8个字符创建普通索引
+    create index  SJ on test(shouji(8));
+
+29.查看创建的索引及索引类型等信息
+    show index from test;
+    show create table test\G
+    #下面的命令也可以查看索引类型
+    show keys from test\G
+
+30.删除Name,shouji列的索引
+    drop index SJ on test;
+    drop index mggindex on test;
+
+31.对Name列前6个字符以及手机列的前8个字符组建联合索引
+    create index lianhe on test(name(6),shouji(8));
+
+32.查询手机号以137开头的，名字为zhao的记录（提前插入）
+    select * from test where shouji like '137%' and name='zhao';
+
+33.查询上述语句的执行计划（是否使用联合索引等）
+    explain select * from test where name='zhao' and shouji like '137%'\G
+
+34.把test表的引擎改成MyISAM
+    alter table test engine = 'MyISAM';
+
+35.收回mingongge用户的select权限
+    revoke select on mingongge.* from mingongge@localhost;
+
+36.删除mingongge用户下数据库mingongge
+    drop user mingongge@localhost;
+    drop database mingongge;
+
+    注：使用drop与delete的区别：
+        drop主要用于删除数据结构，包括内部的数据内容；不能回滚，不触发trigger；既可以是数据库，也可以是数据库中的数据表；
+        delete 主要用于删除数据内容，不删除数据结构；只能操作数据表，
 
 
+37.使用mysqladmin关闭数据库
+    mysqladmin -uroot -pMgg 123.0. shutdown
+    lsof -i:3306
+
+38.MySQL密码丢了，请找回？
+    mysqld_safe --skip-grant-tables &
+
+    #启动数据库服务
+        mysql -uroot -ppassowrd -e "use mysql;update user set passowrd = PASSWORD('newpassword') where user = 'root';flush privileges;"
+
+
+39.
+
+
+40.
 
 
 

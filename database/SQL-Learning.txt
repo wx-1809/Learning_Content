@@ -1,0 +1,6 @@
+
+1.查找最晚入职员工的所有信息
+    描述：有一个员工employees表简况如下:
+        select * from employees where hire_date=(select max(hire_date) from employees);
+
+
