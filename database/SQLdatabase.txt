@@ -170,11 +170,6 @@ Linux系统运维的Mysql面试题
         mysql -uroot -ppassowrd -e "use mysql;update user set passowrd = PASSWORD('newpassword') where user = 'root';flush privileges;"
 
 
-39.
-
-
-40.
-
 
 
 
