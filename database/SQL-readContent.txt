@@ -135,7 +135,74 @@ MySql数据库相关内容
         5.执行start slave and show slave status\G
 
 20.如何开启从库的binlog功能？
-    
+    修改配置文件加上下面的配置
+        log_bin = slave-bin
+        log_bin_index = slave-bin.index
+    需要重启服务
+
+21.Mysql如何实现双向互为主从复制，并说明应用场景？
+    双向同步主要应用于解决单一主库写的压力，具体配置如下
+        主库配置
+           [mysqld]
+            auto_increment_increment = 2 #起始ID
+            auto_increment_offset = 1 #ID自增间隔
+            log-slave-updates
+        从库配置
+            [mysqld]
+              auto_increment_increment = 2 #起始ID
+              auto_increment_offset = 2 #ID自增间隔
+              log-slave-updates
+
+22. mysql如何实现级联同步，并说明应用场景？
+    级联同步主要应用在从库需要做为其它数据库的主库，在需要做级联同步的数据库配置文件增加下面的配置即可
+        log-bin = slave-bin
+        log-bin_index = slave-bin.index
+
+23.mysql主从复制故障如何解决？
+    1.登录从库，执行stop slave，停止主从同步
+      然后set global sql_slave_skip_counter = 1;跳过一步错误
+      最后执行 start slave；并查看主从同步状态
+
+    2.需要重新进行主从同步操作
+        进入主库，进行全备数据库并刷新binlog，查看主库此时状态
+        恢复全备文件到从库，然后执行change master；
+        开启主从同步start slave；并查看主从同步状态
+
+24.如何监控主从复制是否故障？
+    mysql -uroot -ppassword -e "show slave status\G" |grep -E
+    "slave_IO_Running|slave_SQL_Running"|awk '{print $2}' | grep -c Yes
+    通过判断Yes的个数来监控主从复制状态，正常情况等于2
+
+25.Mysql数据库如何实现读写分离？
+    1.通过开发程序实现
+    2.通过其它工具实现(mmm、mycat等)
+
+26.生产一主多从从库宕机，如何手工恢复？
+    1.停止于主库的连接
+    2.修复好从库数据库
+    3.然后重新操作主库同步
+
+27.生产一主多从从机宕机，如何手工恢复？
+    1.登录各个从库停止同步，并查看谁的数据最新，将它设置为新主库让其它从库同步其数据
+    2.修复好主库之后，重新操作主从同步的步骤就可以了
+    #需要注意的：新的主库如果之前是只读，需要关闭此功能让其可写
+    #需要在新从库创建之前与之前主库相同的同步的用户与权限
+    #其它从库执行change master to master_port=新主库的端口，start slave
+
+28.工作中遇到过哪些数据库故障，请描述2个例子？
+    1.开发使用root用户在从库写入数据导致主从数据不一致，并且前端没有展示需要修改的内容（仍然是老数据）。
+    2，内网测试环境服务器突然断电导致主从同步故障
+
+29.Mysql出现复制延迟有哪些原因？如何解决？
+    1.需要同步的数据库太多
+    2.从库的硬件资料较差，需要提升
+    3.网络问题，需要提升网络带宽
+    4.主库的数据写入量较大，需要优配置和硬件资源
+    5.sql语句执行过长导致，需要优化
+
+30.
+
+
 
 
 

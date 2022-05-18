@@ -4,3 +4,13 @@
         select * from employees where hire_date=(select max(hire_date) from employees);
 
 
+2.查找倒数第三员工的所有信息
+    select * from employees where hire_date=(
+        select distinct hire_date from employees
+            order by hire_date desc limit 1 offset 2)
+    其中limit 1,offset 2：表示去掉排名倒数第一第二的时间，取倒数第三的时间；
+
+    select * from test LIMIT 3 OFFSET 1;(在mysql 5以后支持这种写法)
+    当 limit和offset组合使用的时候，limit后面只能有一个参数，表示要取的的数量,offset表示要跳过的数量。
+
+3.
