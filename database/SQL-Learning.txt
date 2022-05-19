@@ -20,4 +20,51 @@
             order by salaries.emp_no
 
 
-4.
+4.请你查找所有已经分配部门的员工的last_name和first_name以及dept_no，未分配的部门的员工不显示；
+   select employees.last_name,employees.first_name,dept_emp.dept_no
+    from employees,dept_emp
+        where employees.emp_no=dept_emp.emp_no
+
+5.请你查找所有已经分配部门的员工的last_name和first_name以及dept_no，也包括暂时没有分配具体部门的员工；
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
