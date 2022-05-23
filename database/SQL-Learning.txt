@@ -26,6 +26,22 @@
         where employees.emp_no=dept_emp.emp_no
 
 5.请你查找所有已经分配部门的员工的last_name和first_name以及dept_no，也包括暂时没有分配具体部门的员工；
+    (1)左连接：
+        以左表为基础，根据on后给出的两表的条件将两表连接起来，结果会将左表所有的查询信息列出，而右边只列出on后条件与左表满足的部分。
+        左表(table 1)全部保留,右表(table 2)关联不上用null表示。
+        SELECT * FROM table1 LEFT JOIN table2 ON table1.a=table2.b
+    (2)右连接：
+        与左连接相反。
+        右表(table2)全部保留，左表(table1)关联不上的用null表示。
+        SELECT * FROM table1 RIGHT JOIN table2 ON table1.a=table2.b
+    (3)内连接：
+        保留两个表共有的部分。
+        SELECT * FROM table1 inner JOIN table2 ON table1.a=table2.b
+
+    select last_name, first_name, dept_no from employees left join dept_emp
+        on employees.emp_no=dept_emp.emp_no
+
+6.请你查找薪水记录超过15条的员工号emp_no以及其对应的记录次数t，内容如下：
 
 
 
