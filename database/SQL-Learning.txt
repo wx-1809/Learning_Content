@@ -41,7 +41,26 @@
     select last_name, first_name, dept_no from employees left join dept_emp
         on employees.emp_no=dept_emp.emp_no
 
-6.请你查找薪水记录超过15条的员工号emp_no以及其对应的记录次数t，内容如下：
+6.请你查找薪水记录超过15条的员工号emp_no以及其对应的记录次数t，内容如下：--牛客网SQL7
+    select emp_no, count(emp_no) as t from salaries
+        group by emp_no having t>15;
+
+    group by和having一起使用；
+
+7.请你找出所有员工具体的薪水salary情况，对于相同的薪水只显示一次,并按照逆序显示，以上例子输出如下：---牛客网SQL8
+    select salary from salaries
+        group by salary
+            order by salary desc
+
+    需要注意的点：
+        1.相同的薪水只显示一次：使用group by实现
+        2.逆序显示：order by 名称 desc
+
+8.获取所有非manager的员工emp_no----牛客网SQL10
+    请你找出所有非部门领导的员工emp_no，以上例子输出:
+
+    
+
 
 
 
