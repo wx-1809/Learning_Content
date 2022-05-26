@@ -76,14 +76,62 @@
        where e.emp_no!=m.emp_no
 
 
-10.获取每个部门中当前员工薪水最高的相关信息
+10.获取每个部门中当前员工薪水最高的相关信息----SQL12  （需要重点分析）
     获取每个部门中当前员工薪水最高的相关信息，给出dept_no, emp_no以及其对应的salary，按照部门编号dept_no升序排列，以上例子输出如下:
+     SELECT
+        e.dept_no,
+        e.emp_no,
+        maxSalary
+    FROM
+        dept_emp e
+        INNER JOIN salaries s ON e.emp_no = s.emp_no
+        INNER JOIN (
+        SELECT
+            e.dept_no,
+            max( s.salary ) AS maxSalary
+        FROM
+            dept_emp e
+            INNER JOIN salaries s ON e.emp_no = s.emp_no
+        GROUP BY
+            e.dept_no
+        ) AS m ON e.dept_no = m.dept_no
+        AND s.salary = m.maxSalary
+    ORDER BY
+        e.dept_no
 
 
+11.查找employees表emp_no与last_name的员工信息---SQL15
+    请你查找employees表所有emp_no为奇数，且last_name不为Mary的员工信息，并按照hire_date逆序排列，以上例子查询结果如下:
+     select emp_no,birth_date,first_name,last_name,gender,hire_date from employees
+        where emp_no % 2 = 1
+        and last_name<>'Mary'
+        order by hire_date desc;
+    注：
+        1.不等于：”<>“;
+        2.基数：emp % 2 =1
 
 
+12.统计出当前各个title类型对应的员工当前薪水对应的平均工资---SQL16
+    请你统计出各个title类型对应的员工薪水对应的平均工资avg。结果给出title以及平均工资avg，并且以avg升序排序，以上例子输出如下:
+        select t.title, avg(s.salary) from titles as t inner join salaries as s
+            on t.emp_no=s.emp_no
+             group by t.title
 
+    注：内连接，将相同的字段处理相同，然后分组；求平均值
 
+13.获取当前薪水第二多的员工的emp_no以及其对应的薪水salary---SQL17
+    请你获取薪水第二多的员工的emp_no以及其对应的薪水salary，
+       若有多个员工的薪水为第二多的薪水，则将对应的员工的emp_no和salary全部输出，并按emp_no升序排序。
+            select emp_no,salary from salaries
+              where salary = (select distinct salary from salaries
+                order by salary desc limit 1,1 ) ;
+
+        注：第二员工最多的使用limit；distinct筛选出相应的内容；
+
+14.获取当前薪水第二多的员工的emp_no以及其对应的薪水salary---SQL18
+    请你查找薪水排名第二多的员工编号emp_no、薪水salary、last_name以及first_name，不能使用order by完成，以上例子输出为:
+      （温馨提示:sqlite通过的代码不一定能通过mysql，因为SQL语法规定，使用聚合函数时，select子句中一般只能存在以下三种元素：常数、聚合函数，group by 指定的列名。如果使用非group by的列名，sqlite的结果和mysql 可能不一样)
+      
 
 
 
