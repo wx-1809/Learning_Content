@@ -131,7 +131,7 @@
 14.获取当前薪水第二多的员工的emp_no以及其对应的薪水salary---SQL18
     请你查找薪水排名第二多的员工编号emp_no、薪水salary、last_name以及first_name，不能使用order by完成，以上例子输出为:
       （温馨提示:sqlite通过的代码不一定能通过mysql，因为SQL语法规定，使用聚合函数时，select子句中一般只能存在以下三种元素：常数、聚合函数，group by 指定的列名。如果使用非group by的列名，sqlite的结果和mysql 可能不一样)
-      
+
 
 
 
