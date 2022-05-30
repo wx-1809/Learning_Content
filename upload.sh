@@ -1,3 +1,3 @@
 git add .
-git commit -m"sql_select"
+git commit -m"mysql-leaning"
 git push origin main
