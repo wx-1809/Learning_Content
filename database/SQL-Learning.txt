@@ -163,6 +163,65 @@
 16.查找在职员工自入职以来的薪水涨幅情况：----SQL21
     请你查找在职员工自入职以来的薪水涨幅情况，给出在职员工编号emp_no以及其对应的薪水涨幅growth，并按照growth进行升序，以上例子输出为
     （注: to_date为薪资调整某个结束日期，或者为离职日期，to_date='9999-01-01'时，表示依然在职，无后续调整记录）
+        select b.emp_no, (b.salary-a.salary) as growth from
+          (select e.emp_no, s.salary from employees e left join salaries s
+            on e.emp_no=s.emp_no and e.hire_date=s.from_date) a---入职工资表
+            inner join
+            (select e.emp_no,s.salary from employees e left join salaries s
+             on e.emp_no=s.emp_no where to_date='9999-01-01') b---现在工资表
+
+            on a.emp_no=b.emp_no
+            order by growth
+
+
+17.统计各个部门的工资记录数---SQL22
+    请你统计各个部门的工资记录数，给出部门编码dept_no、部门名称dept_name以及部门在salaries表里面有多少条记录sum，按照dept_no升序排序，以上例子输出如下:
+    select d.dept_no,d.dept_name, count(s.salary) as SUM from
+        departments d join dept_emp de
+        on d.dept_no = de.dept_no
+        join salaries s on s.emp_no=de.emp_no
+        group by d.dept_no
+        order by d.dept_no ASC
+    注：join的用法
+
+18.对所有员工的薪水按照salary降序进行1-N的排名---SQL23
+    对所有员工的薪水按照salary降序先进行1-N的排名，如果salary相同，再按照emp_no升序排列：
+    使用窗口函数：
+        select emp_no, salary, dense_rank() over(order by salary desc) as 'rank' from salaries
+            where to_date='9999-01-01'
+    不使用窗口函数；
+        -- rank排名：查询表中大于自己薪水的员工的数量（考虑并列：去重）
+        SELECT  s1.emp_no, s1.salary,(SELECT COUNT(DISTINCT s2.salary)
+            FROM salaries s2 WHERE s2.to_date = '9999-01-01' AND s2.salary >= s1.salary) AS `rank`  -- 去重：计算并列排名
+        FROM
+          salaries s1
+        WHERE s1.to_date = '9999-01-01'
+        ORDER BY s1.salary DESC,
+          s1.emp_no ;
+
+
+    注：窗口函数用法：
+        1.<窗口函数> OVER ( [PARTITION BY <列清单> ]
+                         ORDER BY <排序用列清单> ）
+
+        2.RANK()：
+            在计算排序时，若存在相同位次，会跳过之后的位次。
+            例如，有3条排在第1位时，排序为：1，1，1，4······
+        3.DENSE_RANK()
+            这就是题目中所用到的函数，在计算排序时，若存在相同位次，不会跳过之后的位次。
+            例如，有3条排在第1位时，排序为：1，1，1，2······
+
+        4.ROW_NUMBER()
+            这个函数赋予唯一的连续位次。
+            例如，有3条排在第1位时，排序为：1，2，3，4······
+
+19.获取所有非manager员工当前的薪水情况--SQL24
+    获取所有非manager员工薪水情况，给出dept_no、emp_no以及salary，以上例子输出:
+    
+
+
+
+
 
 
 
