@@ -217,7 +217,7 @@
 
 19.获取所有非manager员工当前的薪水情况--SQL24
     获取所有非manager员工薪水情况，给出dept_no、emp_no以及salary，以上例子输出:
-    
+
 
 
 
