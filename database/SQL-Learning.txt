@@ -261,6 +261,41 @@
 21.汇总各个部门当前员工的title类型的分配数目---SQL26
      汇总各个部门当前员工的title类型的分配数目，
         即结果给出部门编号dept_no、dept_name、其部门下所有的员工的title以及该类型title对应的数目count，结果按照dept_no升序排序，dept_no一样的再按title升序排序
+            SELECT det.dept_no,det.dept_name,det.title,COUNT(title) count
+                FROM (SELECT de.dept_no,d.dept_name,t.title
+                FROM dept_emp de
+                INNER JOIN departments d
+                ON de.dept_no=d.dept_no
+                INNER JOIN titles t
+                ON de.emp_no=t.emp_no
+                ) det
+            GROUP BY det.dept_no ,det.title
+            order by det.dept_no ;
+
+
+22.使用join查询方式找出没有分类的电影id以及名称---SQL29
+    使用join查询方式找出没有分类的电影id以及其电影名称。
+        select f.film_id as '电影id',f.title as '名称' from film f
+          where f.film_id not in (select f.film_id from film f
+            inner join film_category fc
+            on f.film_id=fc.film_id
+            inner join category c
+            on fc.category_id=c.category_id)
+
+
+23.使用子查询的方式找出属于Action分类的所有电影对应的title,description---SQL30
+    你能使用子查询的方式找出属于Action分类的所有电影对应的title,description吗
+        select f.title, f.description from film f inner join film_category fc
+            on f.film_id=fc.film_id
+            where fc.category_id in
+                (select c.category_id from category c where name='Action') -- 筛选出action的分类id
+
+24.将employees表的所有员工的last_name和first_name拼接起来作为Name---SQL32
+    请将employees表的所有员工的last_name和first_name拼接起来作为Name，中间以一个空格区分。
+        (注：sqllite,字符串拼接为 || 符号，不支持concat函数，mysql支持concat函数)。
+
+
+
 
 
 
