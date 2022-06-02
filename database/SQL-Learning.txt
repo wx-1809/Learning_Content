@@ -293,8 +293,31 @@
 24.将employees表的所有员工的last_name和first_name拼接起来作为Name---SQL32
     请将employees表的所有员工的last_name和first_name拼接起来作为Name，中间以一个空格区分。
         (注：sqllite,字符串拼接为 || 符号，不支持concat函数，mysql支持concat函数)。
+        select concat(last_name," ", first_name) from employees
+
+        注：拼接方法：concat；
 
 
+25.创建一个actor表，包含如下列信息。 ---SQL33
+     create table actor(
+        actor_id smallint(5) primary key comment'主键',
+        first_name varchar(45) not null comment'名字',
+        last_name varchar(45) not null comment'姓氏',
+        last_update date not null comment'日期'
+    );
+
+
+26.批量插入数据 ---SQL34
+    insert into actor(actor_id,
+                  first_name,
+                  last_name,
+                  last_update)
+    values(1,'PENELOPE', 'GUINESS', '2006-02-15 12:34:33'),
+          (2,'NICK','WAHLBERG','2006-02-15 12:34:33');
+
+
+27.批量插入数据，不使用replace操作 ---SQL35
+    对于表actor插入如下数据,如果数据已经存在，请忽略(不支持使用replace操作)
 
 
 
