@@ -318,6 +318,106 @@
 
 27.批量插入数据，不使用replace操作 ---SQL35
     对于表actor插入如下数据,如果数据已经存在，请忽略(不支持使用replace操作)
+    insert ignore into actor values('3','ED','CHASE','2006-02-15 12:34:33');
+
+    注：
+        1.insert into 表示插入数据，数据库会检查主键，如果出现重复会报错；
+        2.replace into表示插入替换数据，需求表中有PrimaryKey，或者unique索引，如果数据库已存在数据，则用新数据替换，如果没有数据效果则和insert into一样。
+        3.insert ignore表示，如果表中已经存在相同的记录，则忽略当前新数据；
+
+28.创建一个actor_name表---SQL36
+    请你创建一个actor_name表，并且将actor表中的所有first_name以及last_name导入该表.
+        actor_name表结构如下，题目最后会查询actor_name表里面的数据来对比结果输出：
+
+    create table if not exists actor_name(
+        first_name varchar(45) not null,
+        last_name varchar(45) not null); -- 创建表
+
+    insert into actor_name select first_name,last_name from actor; -- 插入查询结构
+
+    注：插入查询表的结构内容；
+
+29.对first_name创建唯一索引uniq_idx_firstname---SQL37
+    对first_name创建唯一索引uniq_idx_firstname，对last_name创建普通索引idx_lastname：
+
+    1.使用create创建索引
+      CREATE UNIQUE INDEX uniq_idx_firstname on actor (first_name);  -- 创建唯一索引
+      CREATE INDEX idx_lastname ON actor (last_name);        -- 创建普通索引
+
+    2.使用alter创建索引
+      alter table actor add unique uniq_idx_firstname(first_name); -- 创建唯一索引
+      alter table actor add index idx_lastname(last_name);    -- 创建普通索引
+
+    注：
+        1.使用create创建索引方式：
+            普通索引：create index 索引名 on 表名(col1, col2, ..., )
+            唯一索引：create unique index 索引名 on 表名(col1, col2, ..., )
+        2.使用alter创建索引：
+            主键索引：
+                特点：数据列不允许重复，不能为null,一张表只能有一个主键；Mysql主动将该字段进行排序
+                ALTER TABLE 表名 ADD Primary key (col);
+            唯一索引：
+                特点：索引列是唯一的，可以null；Mysql主动将该字段进行排序
+                ALTER TABLE 表名 ADD unique <索引名> (col1, col2, ...col3);
+            普通索引：
+                特点：添加普通索引， 索引值不唯一，可为null
+                Alter table 表名 ADD index <索引名> (col1, col2, ...,);
+            全文索引：
+                特点：只能在文本类型CHAR，VARCHAR, TEXT类型字段上创建全文索引；
+                ALTER TABLE 表名 ADD Fulltext <索引名> (col)
+            多列索引：
+                特点：多列是唯一的
+                ALTER TABLE 表名 ADD UNIQUE (col1, col2, ..., )
+
+30.针对actor表创建视图actor_name_view---SQL38
+    针对actor表创建视图actor_name_view，只包含first_name以及last_name两列，并对这两列重新命名，first_name为first_name_v，last_name修改为last_name_v：
+    后台会插入2条数据:
+        insert into actor values ('1', 'PENELOPE', 'GUINESS', '2006-02-15 12:34:33'), ('2', 'NICK', 'WAHLBERG', '2006-02-15 12:34:33');
+    然后打印视图名字和插入的数据
+
+    创建视图
+        create view actor_name_view(first_name_v, last_name_v) as
+            select first_name, last_name from actor
+    或者是：
+        create view actor_name_view as
+           select first_name as first_name_v, last_name as last_name_v from actor
+
+31.针对上面的salaries表emp_no字段创建索引idx_emp_no。---SQL39
+    针对salaries表emp_no字段创建索引idx_emp_no，查询emp_no为10005，使用强制索引。
+    后台会检查是否使用强制索引。
+     select * from salaries
+      force index(idx_emp_no)  -- 强制索引的方法
+      where emp_no=10005
+
+32.在last_update后面新增加一列名字为create_date---SQL40
+    现在在last_update后面新增加一列名字为create_date, 类型为datetime, NOT NULL，默认值为'2020-10-01 00:00:00'
+    alter table `actor`
+        add column `create_date` datetime not null default '2020-10-01 00:00:00'
+
+    注：
+     1.actor和create_date的不是单引号：是"``";
+     2.最后一列增加列：alter table 表名 add column ……
+     3.指定位置增加列：alter table 表名 add column ……after列名
+     4.在第一列增加列：alter table 表名 add column ……first
+
+33.构造一个触发器audit_log---SQL41
+    构造一个触发器audit_log，在向employees_test表中插入一条数据的时候，触发插入相关的数据到audit中。
+    后台会往employees_test插入一条数据:
+      INSERT INTO employees_test (ID,NAME,AGE,ADDRESS,SALARY)VALUES (1, 'Paul', 32, 'California', 20000.00 );
+    然后从audit里面使用查询语句:
+      select * from audit;
+    
+
+
+
+
+
+
+
+
+
+
+
 
 
 
