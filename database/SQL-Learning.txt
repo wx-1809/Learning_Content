@@ -437,10 +437,27 @@
 
 34.删除emp_no重复的记录，只保留最小的id对应的记录。---SQL42
 
+    delete from titles_test
+      where id not in(
+        select * from (  -- 给结果取个别名叫l，这样我们就不是从原始表中查询结果删除而是L表查询结果并删除
+            select min(id)
+            from titles_test
+            group by emp_no
+        ) a
+      );
 
+     注：MySQL中不允许在子查询的同时删除表数据（不能一边查一边把查的表删了）
 
+35.将所有to_date为9999-01-01的全部更新为NULL。---SQL43
+    将所有to_date为9999-01-01的全部更新为NULL,且 from_date更新为2001-01-01。
 
+    update titles_test
+        set to_date=NULL, from_date='2001-01-01'
+        where to_date='9999-01-01'
 
+36.将id=5以及emp_no=10001的行数据替换成id=5以及emp_no=10005
+    将id=5以及emp_no=10001的行数据替换成id=5以及emp_no=10005,其他数据保持不变，使用replace实现，直接使用update会报错。
+    
 
 
 
