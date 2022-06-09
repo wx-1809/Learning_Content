@@ -1,4 +1,4 @@
-最常用的MySQL面试题集合
+最常用的MySQL面试题集合一
 除了基础题部分，小编收集整理的mysql面试题还包括如下知识点或题型：
     1.MySQL高性能索引
     2.SQL语句
@@ -277,6 +277,45 @@ MySQl事务处理
             在一些MySQL索引基础考题中，我们可以轻松的通过索引基础和类型来解决此类问题，对于一些索引创建注意事项方面的考点，我们可以通过索引创建原则和注意事项来解决。
 
         问题14：创建MySQL联合索引应该注意什么？
+            需遵循前缀原则
+
+        问题15：列值为NULL时，查询是否会用到索引？
+            在MySQL里NULL值的列也是走索引的。当然，如果计划对列进行索引，就要尽量避免把它设置为可空，MySQL难以优化引用了可空列的查询,它会使索引、索引统计和值更加复杂。
+
+        问题16：以下语句是否会应用索引：SELECT FROM users WHERE YEAR(adddate) < 2007;*
+            不会，因为只要列涉及到运算，MySQL就不会使用索引。
+
+        问题17：MyISAM索引实现？
+            MyISAM存储引擎使用B+Tree作为索引结构，叶节点的data域存放的是数据记录的地址。MyISAM的索引方式也叫做非聚簇索引的，之所以这么称呼是为了与InnoDB的聚簇索引区分。
+
+        问题17：MyISAM索引与InnoDB索引的区别？
+            ·InnoDB索引是聚簇索引，MyISAM索引是非聚簇索引。
+            ·InnoDB的主键索引的叶子节点存储着行数据，因此主键索引非常高效。
+            ·MyISAM索引的叶子节点存储的是行数据地址，需要再寻址一次才能得到数据。
+            ·InnoDB非主键索引的叶子节点存储的是主键和其他带索引的列数据，因此查询时做到覆盖索引会非常高效
+
+        问题18：以下三条sql 如何建索引，只建一条怎么建？
+            WHERE a=1 AND b=1
+            WHERE b=1
+            WHERE b=1 ORDER BY time DESC
+
+            以顺序b,a,time建立联合索引，CREATE INDEX table1_b_a_time ON index_test01(b,a,time)。因为最新MySQL版本会优化WHERE子句后面的列顺序，以匹配联合索引顺序。
+
+        问题19：有A(id,sex,par,c1,c2),B(id,age,c1,c2)两张表，其中A.id与B.id关联，现在要求写出一条SQL语句，将B中age>50的记录的c1,c2更新到A表中同一记录中的c1,c2字段中。
+            考点分析
+               这道题主要考察的是MySQL的关联UPDATE语句
+
+            延伸考点：
+                ·MySQL的关联查询语句
+                ·MySQL的关联UPDATE语句
+
+            针对刚才这道题，答案可以是如下两种形式的写法：
+                UPDATE A,B SET A.c1 = B.c1, A.c2 = B.c2 WHERE A.id = B.id
+                UPDATE A INNER JOIN B ON A.id=B.id SET A.c1 = B.c1,A.c2=B.c2
+                再加上B中age>50的条件：
+                UPDATE A,B set A.c1 = B.c1, A.c2 = B.c2 WHERE A.id = B.id and B.age > 50;
+                UPDATE A INNER JOIN B ON A.id = B.id set A.c1 = B.c1,A.c2 = B.c2 WHERE B.age > 50
+
 
 
 
