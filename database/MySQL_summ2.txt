@@ -2,4 +2,195 @@
 
 一、MySQL的关联查询语句
     1.六种关联查询
-            
+       ·交叉连接（CROSS JOIN）---笛卡尔积
+       ·内连接（INNER JOIN）
+       ·外连接（LEFT JOIN/RIGHT JOIN）
+       ·联合查询（UNION与UNION ALL）
+       ·全连接（FULL JOIN）
+       ·自连接
+
+      SELECT * FROM A,B(,C)或者
+      SELECT * FROM A CROSS JOIN B (CROSS JOIN C)
+      #没有任何关联条件，结果是笛卡尔积，结果集会很大，没有意义，很少使用
+
+      内连接（INNER JOIN）
+      SELECT * FROM A,B WHERE A.id=B.id或者
+      SELECT * FROM A INNER JOIN B ON A.id=B.id
+      多表中同时符合某种条件的数据记录的集合，INNER JOIN可以缩写为JOIN
+
+    2.内连接分为三类
+        ·等值连接：ON A.id=B.id
+        ·不等值连接：ON A.id > B.id
+        ·自连接：SELECT * FROM A T1 INNER JOIN A T2 ON T1.id=T2.pid
+
+    3.外连接（LEFT JOIN/RIGHT JOIN）
+        ·左外连接：LEFT OUTER JOIN, 以左表为主，先查询出左表，按照ON后的关联条件匹配右表，没有匹配到的用NULL填充，可以简写成LEFT JOIN。
+        ·右外连接：RIGHT OUTER JOIN, 以右表为主，先查询出右表，按照ON后的关联条件匹配左表，没有匹配到的用NULL填充，可以简写成RIGHT JOIN。
+
+    4.联合查询（UNION与UNION ALL）
+         SELECT * FROM A UNION SELECT * FROM B UNION ...
+        ·就是把多个结果集集中在一起，UNION前的结果为基准，需要注意的是联合查询的列数要相等，相同的记录行会合并。
+        ·如果使用UNION ALL，不会合并重复的记录行
+        ·效率 UNION 高于 UNION ALL
+
+    5.全连接（FULL JOIN）
+        ·MySQL不支持全连接
+        ·可以使用LEFT JOIN 和UNION和RIGHT JOIN联合使用
+
+        SELECT * FROM A LEFT JOIN B ON A.id=B.id UNION
+        SELECT * FROM A RIGHT JOIN B ON A.id=B.id
+
+    6.嵌套查询
+        用一条SQL语句得结果作为另外一条SQL语句得条件，效率不好把握
+        SELECT * FROM A WHERE id IN (SELECT id FROM B)
+
+        解题方法
+            根据考题要搞清楚表的结果和多表之间的关系，根据想要的结果思考使用那种关联方式，通常把要查询的列先写出来，然后分析这些列都属于哪些表，才考虑使用关联查询
+
+    7.为了记录足球比赛的结果，设计表如下：
+        team：参赛队伍表
+        match：赛程表
+        其中，match赛程表中的hostTeamID与guestTeamID都和team表中的teamID关联，查询2006-6-1到2006-7-1之间举行的所有比赛，并且用以下形式列出：拜仁 2:0 不莱梅 2006-6-21
+
+         首先列出需要查询的列：
+            表team
+            teamID teamName
+            表match
+            match ID
+            hostTeamID
+            guestTeamID
+            matchTime matchResult
+
+         其次列出结果列：
+            主队 结果 客对 时间
+
+         初步写一个基础的SQL：
+          SELECT hostTeamID,matchResult,matchTime guestTeamID from match where matchTime between "2006-6-1" and "2006-7-1";
+         通过外键联表，完成最终SQL：
+          select t1.teamName,m.matchResult,t2.teamName,m.matchTime from match as m
+                    left join team as t1 on m.hostTeamID = t1.teamID,
+                    left join team t2 on m.guestTeamID=t2.guestTeamID
+                    where m.matchTime between "2006-6-1" and "2006-7-1"
+
+    8.UNION与UNION ALL的区别？
+        ·如果使用UNION ALL，不会合并重复的记录行
+        ·效率 UNION 高于 UNION ALL
+
+    9.一个6亿的表a，一个3亿的表b，通过外键tid关联，你如何最快的查询出满足条件的第50000到第50200中的这200条数据记录。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
