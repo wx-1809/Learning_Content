@@ -200,7 +200,7 @@
             select id from t where name like ‘abc%’
           10.不要在 where 子句中的“=”左边进行函数、算术运算或其他表达式运算，否则系统将可能无法正确使用索引。
 
-          
+
 
 
 
