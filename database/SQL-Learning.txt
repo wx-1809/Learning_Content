@@ -455,8 +455,33 @@
         set to_date=NULL, from_date='2001-01-01'
         where to_date='9999-01-01'
 
-36.将id=5以及emp_no=10001的行数据替换成id=5以及emp_no=10005
+36.将id=5以及emp_no=10001的行数据替换成id=5以及emp_no=10005。----SQL44
     将id=5以及emp_no=10001的行数据替换成id=5以及emp_no=10005,其他数据保持不变，使用replace实现，直接使用update会报错。
+
+      UPDATE titles_test
+         SET emp_no = REPLACE(emp_no, 10001, 10005)
+         WHERE id = 5;
+
+     注：replace()函数含义：
+        1）replace(str1,str2,str3)
+           说明：str3替换str1中出现的所有str2，返回新的字符串，如果有某个参数为NULL，此函数返回NULL
+            该函数可以多次替换，只要str1中还有str2存在，最后都被替换成str3 若str3为空，则删除str2；
+
+        2）replace函数的格式为：replace(string text, from text, to text)，意为把字串string里出现地所有子字串 from 替换成子字串 to.
+            例如：replace(‘abcdefabcdef’, ‘cd’, ‘XX’)结果为：abXXefabXXef。
+            例2：将值“30AB”需要改为“300102”，(是A改为01，B改为02，而不是将AB改为0102)则为replace(replace(‘30AB’, ‘A’, ‘01’),‘B’,‘02’)
+
+37.将titles_test表名修改为titles_2017。--SQL45
+    将titles_test表名修改为titles_2017；
+        修改表明的语法如下：
+            alter table <原来的表名> rename to <新表名>;
+        正解：
+            alter table titles_test rename to titles_2017;
+
+38.在audit表上创建外键约束，其emp_no对应employees_test表的主键id。--SQL46
+    在audit表上创建外键约束，其emp_no对应employees_test表的主键id。
+        
+
 
 
 
