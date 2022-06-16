@@ -1,3 +1,3 @@
 git add .
-git commit -m"mysql-sqlselect"
+git commit -m"mysql-sqllearning"
 git push origin main
