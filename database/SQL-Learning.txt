@@ -481,11 +481,27 @@
 38.在audit表上创建外键约束，其emp_no对应employees_test表的主键id。--SQL46
     在audit表上创建外键约束，其emp_no对应employees_test表的主键id。
 
+    创建外键的语句结构：
+        ALTER TABLE <表名>
+        ADD CONSTRAINT FOREIGN KEY (<列名>)
+        REFERENCES <关联表>（关联列）
 
+    语句：
+        alter table audit
+         add constraint foreign key(emp_no)
+         references employees_test(id);
 
+39.将所有获取奖金的员工当前的薪水增加10%。--SQL48
+    请你写出更新语句，将所有获取奖金的员工当前的(salaries.to_date='9999-01-01')薪水增加10%。(emp_bonus里面的emp_no都是当前获奖的所有员工，不考虑获取的奖金的类型)。
+        以上示例更新后的结果salaries为:
 
+    update salaries as s join emp_bonus as e on s.emp_no=e.emp_no
+        set salary = salary*1.1
+        where to_date='9999-01-01'
+    注：推荐使用join连接查询，连接查询不需要创建+销毁临时表，因此速度比子查询快。
 
-
+40.将employees表中的所有员工的last_name和first_name通过引号连接起来。 --SQL50
+    将employees表中的所有员工的last_name和first_name通过(')连接起来。(sqlite不支持concat，请用||实现，mysql支持concat)
 
 
 
