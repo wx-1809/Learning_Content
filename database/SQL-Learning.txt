@@ -503,6 +503,26 @@
 40.将employees表中的所有员工的last_name和first_name通过引号连接起来。 --SQL50
     将employees表中的所有员工的last_name和first_name通过(')连接起来。(sqlite不支持concat，请用||实现，mysql支持concat)
 
+    级联的函数格式：
+       select concat (id, name, score) as info from tt2;
+
+    正解：
+    SELECT CONCAT(RTrim(last_name),"'",LTrim(first_name)) AS name
+        FROM employees;
+
+    去掉空格的函数：(R/L)Trim()
+        RTrim():去除字符串右端空格
+        LTrim():去除字符串左端空格
+        Trim():去除字符串两端的空格
+
+41.查找字符串中逗号出现的次数.--SQL51
+    请你统计每个字符串中逗号出现的次数cnt。
+    SELECT id, LENGTH(string) - LENGTH(REPLACE(string, ",", "")) AS cnt
+        FROM strings;
+
+42.获取employees中的first_name.---SQL52
+    请你将employees中的first_name，并按照first_name最后两个字母升序进行输出。
+
 
 
 
