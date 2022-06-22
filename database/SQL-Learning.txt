@@ -522,6 +522,24 @@
 
 42.获取employees中的first_name.---SQL52
     请你将employees中的first_name，并按照first_name最后两个字母升序进行输出。
+    注：
+        right(data,n) data代表数据.N代表截取的位数，其实也就是对返回的字段进行处理。
+
+    SELECT first_name FROM employees ORDER BY RIGHT(first_name,2);
+
+43.按照dept_no进行汇总。---SQL53
+    按照dept_no进行汇总，属于同一个部门的emp_no按照逗号进行连接，结果给出dept_no以及连接出的结果employees。
+
+    注：group_concat([DISTINCT] 要连接的字段 [Order BY ASC/DESC 排序字段] [Separator '分隔符'])
+
+    解答：
+        select dept_no, group_concat(emp_no) employees from dept_emp group by dept_no
+
+
+44.平均工资.---SQL54
+    查找排除在职(to_date = '9999-01-01' )员工的最大、最小salary之后，其他的在职员工的平均工资avg_salary。
+    
+
 
 
 
