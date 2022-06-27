@@ -539,6 +539,25 @@
 44.平均工资.---SQL54
     查找排除在职(to_date = '9999-01-01' )员工的最大、最小salary之后，其他的在职员工的平均工资avg_salary。
 
+    select (sum(salary)-max(salary)-min(salary))/(count(1)-2) avg_salary
+     from salaries where to_date='9999-01-01';
+
+    注：count(1)：代表所有数据长度；
+        -2：代表减去最大最小值的两个长度；
+
+45.分页查询employees表，每5行一页，返回第2页的数据。---SQL55
+    分页查询employees表，每5行一页，返回第2页的数据；
+
+    select * from employees
+       limit 5,5
+
+    注：limit x,y:
+        y:反馈y条记录
+        x：从第几条记录开始返回(第一条记录序号为0，默认为0)
+
+46.使用含有关键字exists查找未分配具体部门的员工的所有信息。---SQL57
+    select * from employees e
+       where not exists (select emp_no from dept_emp d where d.emp_no=e.emp_no)
 
 
 
