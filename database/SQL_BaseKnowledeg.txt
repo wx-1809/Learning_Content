@@ -427,6 +427,44 @@ SQL 基础知识普及
         WHERE column_name
         IN (value1,value2,..)
 
+    INSERT INTO  插入表
+        INSERT INTO table_name
+        VALUES (value1, value2, value3,....)
+        or
+        INSERT INTO table_name
+        (column1, column2, column3,...)
+        VALUES (value1, value2, value3,....)
+
+    INNER JOIN  内连接
+        SELECT column_name(s)
+        FROM table_name1
+        INNER JOIN table_name2
+        ON table_name1.column_name=table_name2.column_name
+
+    LEFT JOIN  左连接
+        SELECT column_name(s)
+        FROM table_name1
+        LEFT JOIN table_name2
+        ON table_name1.column_name=table_name2.column_name
+
+    RIGHT JOIN  右连接
+        SELECT column_name(s)
+        FROM table_name1
+        RIGHT JOIN table_name2
+        ON table_name1.column_name=table_name2.column_name
+
+    FULL JOIN  全连接
+        SELECT column_name(s)
+        FROM table_name1
+        FULL JOIN table_name2
+        ON table_name1.column_name=table_name2.column_name
+
+    LIKE  模糊匹配
+        SELECT column_name(s)
+        FROM table_name
+        WHERE column_nameLIKE pattern
+
+    ORDER BY  排序
 
 
 ----------------------------语句快速参考 ------------------------------------end---------------------------------------
