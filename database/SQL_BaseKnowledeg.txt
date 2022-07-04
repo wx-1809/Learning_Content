@@ -465,9 +465,76 @@ SQL 基础知识普及
         WHERE column_nameLIKE pattern
 
     ORDER BY  排序
+        SELECT column_name(s)
+            FROM table_name
+            ORDER BY column_name [ASC|DESC]
+
+    SELECT  查找
+         SELECT column_name(s)
+            FROM table_name
+
+    SELECT *  查找表的所有字段
+         SELECT *
+            FROM table_name
+
+    SELECT DISTINCT  查找去除重复的列
+          SELECT DISTINCT column_name(s)
+            FROM table_name
+
+    SELECT INTO  查询结果插入表
+          SELECT *
+            INTO new_table_name [IN externaldatabase]
+            FROM old_table_name
+            or
+            SELECT column_name(s)
+            INTO new_table_name [IN externaldatabase]
+            FROM old_table_name
+
+    SELECT TOP  查询前N条记录
+        SELECT TOP number|percent column_name(s)
+            FROM table_name
+
+    TRUNCATE TABLE  清空表
+        TRUNCATE TABLE table_name
+
+    UNION  去重并集
+        SELECT column_name(s) FROM table_name1
+        UNION
+        SELECT column_name(s) FROM table_name2
+
+    UNION ALL  不去重并集
+        SELECT column_name(s) FROM table_name1
+        UNION ALL
+        SELECT column_name(s) FROM table_name2
+
+    UPDATE  更新
+        UPDATE table_name
+            SET column1=value, column2=value,...
+            WHERE some_column=some_value
+
+    WHERE   条件过滤
+        SELECT column_name(s)
+            FROM table_name
+            WHERE column_name operator value
+
 
 
 ----------------------------语句快速参考 ------------------------------------end---------------------------------------
+
+
+----------------------------Join连接 ------------------------------------start---------------------------------------
+
+    SQL 连接（Joins）
+    SQL join 用于把来自两个或多个表的行结合起来。
+
+----------------------------Join连接 ------------------------------------end-----------------------------------------
+
+
+
+
+
+
+
 
 
 
