@@ -526,8 +526,78 @@ SQL 基础知识普及
 
     SQL 连接（Joins）
     SQL join 用于把来自两个或多个表的行结合起来。
+    SQL JOIN 子句用于把来自两个或多个表的行结合起来，基于这些表之间的共同字段。
+    最常见的 JOIN 类型：SQL INNER JOIN（简单的 JOIN）。 SQL INNER JOIN 从多个表中返回满足 JOIN 条件的所有行。
+    不同的 SQL JOIN
+    在我们继续讲解实例之前，我们先列出您可以使用的不同的 SQL JOIN 类型：
+        INNER JOIN：如果表中有至少一个匹配，则返回行
+        LEFT JOIN：即使右表中没有匹配，也从左表返回所有的行
+        RIGHT JOIN：即使左表中没有匹配，也从右表返回所有的行
+        FULL JOIN：只要其中一个表中存在匹配，则返回行
+
+    INNER JOIN
+        内部链接INNER JOIN关键字选择两个表中具有匹配值的记录。
+    SQL INNER JOIN 语法
+        SELECT column_name(s)FROM table1
+        INNER JOIN table2 ON
+        table1.column_name = table2.column_name;
+      注释：INNER JOIN 与 JOIN 是相同的。
+
+    LEFT JOIN
+       SQL左链接LEFT JOIN关键字返回左表（表1）中的所有行，即使在右表（表2）中没有匹配。如果在正确的表中没有匹配，结果是NULL。
+    SQL LEFT JOIN 语法
+        SELECT column_name(s)
+        FROM table1
+        LEFT JOIN table2
+        ON table1.column_name=table2.column_name;
+      注释：在一些数据库中，LEFT JOIN称为LEFT OUT ER JOIN.
+
+    RIGHT JOIN
+       SQL右链接 RIGHT JOIN 关键字返回右表（table2）的所有行，即使在左表（table1）上没有匹配。如果左表没有匹配，则结果为NULL。
+    SQL RIGHT JOIN 语法
+        SELECT column_name(s) FROM table1
+        RIGHT JOIN table2 ON
+        table1.column_name = table2.column_name;
+       注释：在一些数据库中，RIGHT JOIN 称为 RIGHT OUTER JOIN。
+
+    FULL OUTER JOIN
+         当左（表1）或右（表2）表记录匹配时，FULL OUTER JOIN关键字将返回所有记录。
+    注意： FULL OUTER JOIN可能会返回非常大的结果集！
+
 
 ----------------------------Join连接 ------------------------------------end-----------------------------------------
+
+----------------------------UNION 运算符 ---------------------------------start--------------------------------------
+
+    UNION运算符用于组合两个或更多SELECT语句的结果集。
+    SQL UNION 运算符
+        ·UNION中的每个SELECT语句必须具有相同的列数
+        ·这些列也必须具有相似的数据类型
+        ·每个SELECT语句中的列也必须以相同的顺序排列
+
+    SQL UNION 语法
+        SELECT column_name(s) FROM table1
+        UNION
+        SELECT column_name(s) FROM table2;
+      注释：默认情况下，UNION 运算符选择一个不同的值。如果允许重复值，请使用 UNION ALL。
+
+    SQL UNION ALL 语法
+        SELECT column_name(s) FROM table1
+        UNION ALL
+        SELECT column_name(s) FROM table2;
+      注释：UNION结果集中的列名总是等于UNION中第一个SELECT语句中的列名。
+
+
+
+
+----------------------------UNION 运算符 ------------------------------------end--------------------------------------
+
+
+---------------------------SELECT INTO和INSERT INTO SELECT 语句 -------------------------start------------------------
+    SQL SELECT INTO 语句
+
+
+---------------------------SELECT INTO和INSERT INTO SELECT 语句 -------------------------end--------------------------
 
 
 
