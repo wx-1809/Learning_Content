@@ -593,11 +593,84 @@ SQL 基础知识普及
 ----------------------------UNION 运算符 ------------------------------------end--------------------------------------
 
 
+
 ---------------------------SELECT INTO和INSERT INTO SELECT 语句 -------------------------start------------------------
     SQL SELECT INTO 语句
+        使用 SQL，您可以将信息从一个表中复制到另一个表中。
+        SELECT INTO 语句从一个表中复制数据，然后将数据插入到另一个新表中。
+
+    SQL SELECT INTO 语法
+        SELECT *
+        INTO newtable [IN externaldb]
+        FROM table1;
+        提示：将使用SELECT语句中定义的列名和类型创建新表。您可以使用AS子句来应用一个新名称。
+
+    复制多个表中的数据插入到新表中：
+        SELECT Customers.CustomerName, Orders.OrderID
+        INTO CustomersOrderBackup2013
+        FROM Customers
+        LEFT JOIN Orders
+        ON Customers.CustomerID=Orders.CustomerID;
+
+    提示：SELECT INTO 语句可以用于在另一种模式下创建一个新的空表。只需添加WHERE子句，使查询返回时没有数据：
+     SELECT *
+        INTO newtable
+        FROM table1
+        WHERE 1=0;
+
+    SQL INSERT INTO SELECT 语句
+        INSERT INTO SELECT 语句从表中复制数据，并将数据插入现有的表中。目标表中的任何现有行都不会受到影响。
+
 
 
 ---------------------------SELECT INTO和INSERT INTO SELECT 语句 -------------------------end--------------------------
+
+
+---------------------------删除索引、表以及数据库 -------------------------start-----------------------------------------
+
+    SQL 撤销索引、撤销表以及撤销数据库
+        通过使用 DROP 语句，可以轻松地删除索引、表和数据库。
+
+    DROP INDEX 语句
+        DROP INDEX 语句用于删除表中的索引。
+
+    用于 MS Access 的 DROP INDEX 语法：
+        DROP INDEX index_name ON table_name
+
+    用于 MS SQL Server 的 DROP INDEX 语法：
+        DROP INDEX table_name.index_name
+
+    用于 DB2/Oracle 的 DROP INDEX 语法：
+        DROP INDEX index_name
+
+    用于 MySQL 的 DROP INDEX 语法：
+        ALTER TABLE table_name DROP INDEX index_name
+
+    DROP TABLE 语句
+       DROP TABLE 语句用于删除表。
+        DROP TABLE table_name
+
+    DROP DATABASE 语句
+       DROP DATABASE 语句用于删除数据库。
+        DROP DATABASE database_name
+
+    TRUNCATE TABLE 语句
+        如果我们只需要删除表中的数据，而不删除表本身，那么我们该怎么做？
+      使用TRUNCATE TABLE语句：
+        TRUNCATE TABLE table_name
+
+---------------------------删除索引、表以及数据库 -------------------------end-------------------------------------------
+
+
+---------------------------CREATE和ALTER ----------------------------start-------------------------------------------
+    1.CREATE DATABASE
+        CREATE DATABASE 语句用于创建数据库。
+        SQL CREATE DATABASE 语法
+         CREATE DATABASE dbname;
+
+
+
+---------------------------CREATE和ALTER ------------------------------end-------------------------------------------
 
 
 
