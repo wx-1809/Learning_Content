@@ -573,9 +573,16 @@
         join emp_bonus b on e.emp_no=b.emp_no
         where s.to_date='9999-01-01';
 
-48.统计salary的累计和running_total.---SQL60
+48.统计salary的累计和running_total.---SQL254
     按照salary的累计和running_total，其中running_total为前N个当前( to_date = '9999-01-01')员工的salary累计和，其他以此类推。
     具体结果如下Demo展示:
+        SELECT s1.emp_no, s1.salary, (SELECT SUM(s2.salary) FROM salaries AS s2 WHERE s2.emp_no <= s1.emp_no AND s2.to_date = '9999-01-01') AS running_total
+        FROM salaries AS s1
+        WHERE s1.to_date = '9999-01-01'
+        ORDER BY s1.emp_no
+
+49.给出employees表中排名为奇数行的first_name。 ---SQL255
+    请你在不打乱原序列顺序的情况下，输出：按first_name排升序后，取奇数行的first_name。
 
 
 
